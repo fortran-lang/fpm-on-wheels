@@ -1,0 +1,12 @@
+[build-system]
+build-backend = "mesonpy"
+requires = ["meson-python"]
+
+[project]
+name = "fpm"
+description = "Fortran package manager"
+readme = "README.md"
+license.file = "LICENSE"
+urls.homepage = "https://fpm.fortran-lang.org"
+urls.repository = "https://github.com/fortran-lang/fpm"
+requires-python = ">=3.7"

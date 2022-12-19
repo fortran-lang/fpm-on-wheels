@@ -1,0 +1,1 @@
+option('appdir', type: 'string', value: 'bin')

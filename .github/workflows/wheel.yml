@@ -1,0 +1,149 @@
+name: wheel
+
+on: [push, workflow_dispatch]
+
+jobs:
+  sdist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          pipx run build . --sdist --outdir .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: fpm-sdist
+          path: ./*.tar.gz
+
+  wheel:
+    runs-on: ${{ matrix.os }}
+    needs:
+      - sdist
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macos-11]
+
+    steps:
+      - name: Download sdist
+        uses: actions/download-artifact@v2
+        with:
+          name: fpm-sdist
+
+      - name: Unpack source
+        shell: bash
+        run: |
+          tar xvf fpm-*.tar.gz
+          rm fpm-*.tar.gz
+          echo "PACKAGE_DIR=$(echo fpm-*)" >> $GITHUB_ENV
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.11.3
+        with:
+          package-dir: ${{ env.PACKAGE_DIR }}
+          output-dir: .
+        env:
+          CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang FC=gfortran-11
+          CIBW_ARCHS: auto64
+          CIBW_BUILD: cp310-*
+
+      - name: Rename wheels
+        run: |
+          for wheel in ./*.whl
+          do
+            mv $wheel ${wheel/cp310-cp310/py3-none}
+          done
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: fpm-wheel-unix
+          path: ./*.whl
+
+  wheel-win:
+    runs-on: windows-2019
+    needs:
+      - sdist
+
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Download sdist
+        uses: actions/download-artifact@v2
+        with:
+          name: fpm-sdist
+
+      - name: Unpack source
+        shell: bash
+        run: |
+          tar xvf fpm-*.tar.gz
+          rm fpm-*.tar.gz
+          echo "PACKAGE_DIR=$(echo fpm-*)" >> $GITHUB_ENV
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          install: >-
+            mingw-w64-x86_64-gcc-fortran
+            mingw-w64-x86_64-ninja
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Build wheels
+        run: |
+          set -ex
+          python --version
+          pip install pipx
+          pipx run build --wheel fpm-* --outdir .
+
+      - name: Rename wheels
+        run: |
+          for wheel in ./*.whl
+          do
+            mv $wheel ${wheel/cp310-cp310/py3-none}
+          done
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: fpm-wheel-win
+          path: ./*.whl
+
+  release:
+    needs:
+      - sdist
+      - wheel
+      - wheel-win
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ github.workspace }}  # This will download all files
+
+      - name: Create SHA256 checksums
+        run: |
+          set -ex
+          for output in fpm*/fpm*; do
+            pushd $(dirname "$output")
+            sha256sum $(basename "$output") | tee $(basename "$output").sha256
+            popd
+          done
+
+      - name: Move/Create continuous tag
+        run: |
+          git tag --force 'current' ${{ github.sha }}
+          git push --tags --force
+
+      - name: Upload assets
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: fpm*/fpm*
+          file_glob: true
+          tag: current
+          overwrite: true

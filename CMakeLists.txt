@@ -67,7 +67,7 @@ message(STATUS "fpm source dir: ${fpm_src_SOURCE_DIR}")
 # In general not recommended but fpm has a small footprint and we control the sources
 file(GLOB_RECURSE
   SRC_FILES
-  ${m_cli2_src_SOURCE_DIR}/src/*.F90
+  ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.F90
   ${toml_f_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90

@@ -1,8 +1,0 @@
-[wrap-file]
-directory = M_CLI2-7264878cdb1baff7323cc48596d829ccfe7751b8
-
-source_url = https://github.com/urbanjost/M_CLI2/archive/7264878cdb1baff7323cc48596d829ccfe7751b8.tar.gz
-source_filename = 7264878cdb1baff7323cc48596d829ccfe7751b8.tar.gz
-source_hash = 5e5d4674c682a1dc31fe9e8347a91aab02084e9f65891e714f931a87b41fb64c
-
-patch_directory = M_CLI2

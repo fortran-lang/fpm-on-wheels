@@ -1,8 +1,0 @@
-[wrap-file]
-directory = fpm-0.7.0
-
-source_url = https://github.com/fortran-lang/fpm/releases/download/v0.7.0/fpm-0.7.0.zip
-source_filename = fpm-0.7.0.zip
-source_hash = 536dec7d4502221734683b15e6ff64a6ab3f9910df122d18f851c9a68711f91f
-
-patch_directory = fpm-0.7.0

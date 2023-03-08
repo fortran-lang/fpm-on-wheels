@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-project(fpm)
-enable_language(Fortran)
+project(fpm LANGUAGES C CXX Fortran)
 
 include(ExternalProject)
 include(FetchContent)
@@ -71,6 +70,7 @@ file(GLOB_RECURSE
   ${toml_f_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90
+  ${fpm_src_SOURCE_DIR}/src/*.h
   ${fpm_src_SOURCE_DIR}/src/*.c
 )
 
@@ -84,9 +84,6 @@ target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
 set_target_properties(${BIN_NAME}
   PROPERTIES
   OUTPUT_NAME ${PROJECT_NAME}
-  if(NOT MSVC_IDE)
-  PREFIX bin
-  endif()
 
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 

@@ -1,3 +1,5 @@
+import sys
+
 from skbuild import setup
 
 setup(
@@ -7,4 +9,7 @@ setup(
     author="Fortran-lang",
     license="MIT",
     python_requires=">=3.7",
+    cmake_args=(
+        ["-G", "MSYS Makefiles"] if sys.platform == "win32" else ["-G", "Ninja"]
+    ),
 )

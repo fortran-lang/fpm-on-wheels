@@ -20,4 +20,8 @@ build-backend = "setuptools.build_meta"
 # tracker = "https://github.com/fortran-lang/fpm/issues"
 
 [tool.cibuildwheel.macos]
+
+[[tool.cibuildwheel.overrides]]
+select = "*-macosx_arm64"
 before-build = "bash {project}/scripts/cibw_before_build_macos.sh {project}"
+environment = { FC = "/usr/local/bin/gfortran" }

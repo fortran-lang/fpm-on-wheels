@@ -16,17 +16,24 @@ set(TOML_F_TAG "aee54c5a480d623af99828c76df0447a15ce90dc" CACHE STRING "Set git 
 set(FPM_TAG "v0.7.0" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
-set(INSTALL_LIB_DIR "lib")
-set(INSTALL_BIN_DIR "bin")
 
 find_package(OpenMP)
+
+FetchContent_Declare(
+  fpm_src
+  GIT_TAG ${FPM_TAG}
+  GIT_REPOSITORY "https://github.com/fortran-lang/fpm.git"
+  SOURCE_DIR "${CMAKE_BINARY_DIR}/fpm"
+)
+
+FetchContent_MakeAvailable(fpm_src)
 
 # Download the dependencies from a git project
 FetchContent_Declare(
   m_cli2_src
   GIT_REPOSITORY "https://github.com/urbanjost/M_CLI2.git"
   GIT_TAG ${M_CLI2_TAG}
-  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/M_CLI2"
+  SOURCE_DIR "${fpm_src_SOURCE_DIR}/dependencies/M_CLI2"
 )
 
 # Do not import any of the predefined targets from the dependencies
@@ -41,17 +48,10 @@ FetchContent_Declare(
   toml_f_src
   GIT_REPOSITORY "https://github.com/toml-f/toml-f.git"
   GIT_TAG ${TOML_F_TAG}
-  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/toml-f"
+  SOURCE_DIR "${fpm_src_SOURCE_DIR}/dependencies/toml-f"
 )
 
-FetchContent_Declare(
-  fpm_src
-  GIT_TAG ${FPM_TAG}
-  GIT_REPOSITORY "https://github.com/fortran-lang/fpm.git"
-  SOURCE_DIR "${CMAKE_BINARY_DIR}/fpm"
-)
-
-FetchContent_MakeAvailable(m_cli2_src toml_f_src fpm_src)
+FetchContent_MakeAvailable(m_cli2_src toml_f_src)
 
 # Case 2: Set after (applies only to dependency's scope and below)
 if(IS_DIRECTORY "${toml_f_src_SOURCE_DIR}")
@@ -77,7 +77,7 @@ file(GLOB_RECURSE
 # Make code position independent (-fPIC)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-add_executable(${BIN_NAME} ${SRC_FILES} ${CMAKE_BINARY_DIR}/fpm/app/main.f90)
+add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
 target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
 
 # Set additional properties for executable target
@@ -91,30 +91,14 @@ set_target_properties(${BIN_NAME}
   Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/inc
 )
 
-# set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY TRUE)
-install(TARGETS ${BIN_NAME}
-  RUNTIME DESTINATION ${INSTALL_BIN_DIR}
-  LIBRARY DESTINATION ${INSTALL_LIB_DIR}
-  ARCHIVE DESTINATION ${INSTALL_LIB_DIR}
-)
+if(WIN32)
+  if(SKBUILD)
+    # pip on Windows installs binaries to Scripts not bin
+    message(STATUS "Will install binaries to Scripts")
+    set(CMAKE_INSTALL_BINDIR Scripts)
+  endif()
+endif()
 
-# # Get all targets, including the ones inhereting from
-# function(get_all_targets var)
-# set(targets)
-# get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
-# set(${var} ${targets} PARENT_SCOPE)
-# endfunction()
-#
-# macro(get_all_targets_recursive targets dir)
-# get_property(subdirectories DIRECTORY ${dir} PROPERTY SUBDIRECTORIES)
-#
-# foreach(subdir ${subdirectories})
-# get_all_targets_recursive(${targets} ${subdir})
-# endforeach()
-#
-# get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)
-# list(APPEND ${targets} ${current_targets})
-# endmacro()
-#
-# get_all_targets(all_targets)
-# message("All targets: ${all_targets}")
+install(TARGETS ${BIN_NAME}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)

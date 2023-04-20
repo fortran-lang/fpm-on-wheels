@@ -12,4 +12,5 @@ setup(
     cmake_args=(
         ["-G", "MSYS Makefiles"] if sys.platform == "win32" else ["-G", "Ninja"]
     ),
+    cmake_with_sdist=True,
 )

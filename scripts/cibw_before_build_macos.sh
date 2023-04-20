@@ -1,6 +1,8 @@
 # Install GFortran
 
-if [[ $PLATFORM == "macosx-x86_64" ]]; then
+# if [[ $RUNNER_OS == "macosx-x86_64" ]]; then
+  echo "@@@@@@@@@@: " $RUNNER_ARCH
+  echo "@@@@@@@@@@@@@@@: " $CIBW_ARCHS_MACOS
   #GFORTRAN=$(type -p gfortran-9)
   #sudo ln -s $GFORTRAN /usr/local/bin/gfortran
   # same version of gfortran as the openblas-libs and scipy-wheel builds
@@ -30,5 +32,5 @@ if [[ $PLATFORM == "macosx-x86_64" ]]; then
   # environment (so it mirrors what is done in the conda-forge compiler
   # activation scripts)
   export SDKROOT=${SDKROOT:-$(xcrun --show-sdk-path)}
-  gfortran tools/wheels/test.f
-fi
+  # gfortran tools/wheels/test.f
+# fi

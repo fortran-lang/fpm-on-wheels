@@ -10,8 +10,8 @@ jobs:
       fail-fast: false
       matrix:
         sys:
-          # - { os: windows-2019, shell: "msys2 {0}" }
-          # - { os: ubuntu-20.04, shell: bash }
+          - { os: windows-2019, shell: "msys2 {0}" }
+          - { os: ubuntu-20.04, shell: bash }
           - { os: macos-11, shell: bash }
     defaults:
       run:
@@ -33,13 +33,6 @@ jobs:
       - name: Build wheels
         run: |
           pipx run cibuildwheel
-        env:
-          CIBW_ARCHS_WINDOWS: auto64
-          CIBW_ARCHS_MACOS: arm64
-          CIBW_ENVIRONMENT_WINDOWS: CC=gcc CXX=g++ FC=gfortran
-          CIBW_ENVIRONMENT_MACOS: CC=clang CXX=clang++ FC=gfortran
-          CIBW_BUILD: cp310-*
-          CIBW_BUILD_VERBOSITY: 3
 
       - name: Make wheels pythonless
         run: |

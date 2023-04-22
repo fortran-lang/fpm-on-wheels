@@ -7,21 +7,52 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-# [project]
-# name = "fpm"
-# description = "Fortran Package Manager"
-# version = "0.1.0"
-# authors = [{ name = "The Fortran Programming Language Orgnization" }]
-# license = "MIT"
+[project]
+name = "fpm"
+version = "0.7.0"
+license = { text = "MIT License" }
+authors = [{ name = "fpm maintainers" }]
+requires-python = ">=3.7"
+description = "Fortran package manager"
+readme = "README.md"
+keywords = ["fpm", "fortran", "package manager"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Fortran",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Software Development :: Libraries :: Fortran",
+    "Topic :: Software Development :: Pre-processors",
+    "Topic :: Utilities",
+]
 
-# [project.urls]
-# homepage = "https://fpm.fortran-lang.org"
-# souorce = "https://github.com/fortran-lang/fpm"
-# tracker = "https://github.com/fortran-lang/fpm/issues"
+[project.urls]
+homepage = "https://fpm.fortran-lang.org"
+source-code = "https://github.com/fortran-lang/fpm"
+bug-tracker = "https://github.com/fortran-lang/fpm/issues"
+
+[tool.cibuildwheel]
+build = "cp310-*"
+build-verbosity = "3"
 
 [tool.cibuildwheel.macos]
+archs = ["x86_64", "arm64"]
+environment = { CC = "clang", CXX = "clang++", FC = "gfortran-11" }
 
 [[tool.cibuildwheel.overrides]]
 select = "*-macosx_arm64"
 before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
-environment = { CC = "clang", CXX = "clang++", RUNNER_OS = "macOS", FC="/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran", LDFLAGS = " -L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0", FC_ARM64_LDFLAGS = "$FC_ARM64_LDFLAGS" }
+
+# Override the default environment variables with the cross-compiled ones
+[tool.cibuildwheel.overrides.environment]
+CC = "clang"
+CXX = "clang++"
+FC = "/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran"
+LDFLAGS = "-L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0"
+
+[tool.cibuildwheel.windows]
+archs = ["auto64"]
+environment = { CC = "gcc", CXX = "g++", FC = "gfortran" }

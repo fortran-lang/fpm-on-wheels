@@ -17,12 +17,7 @@ set(FPM_TAG "v0.7.0" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 
-if (SKBUILD)
-  message(STATUS "LD_FLAGS: " $ENV{LD_FLAGS})
-  message(STATUS "FC_ARM64_LDFLAGS: " $ENV{FC_ARM64_LDFLAGS})
-endif()
-
-# find_package(OpenMP)
+find_package(OpenMP REQUIRED Fortran)
 
 FetchContent_Declare(
   fpm_src
@@ -83,7 +78,7 @@ file(GLOB_RECURSE
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
-target_link_libraries(${BIN_NAME})
+target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
 
 # Set additional properties for executable target
 set_target_properties(${BIN_NAME}

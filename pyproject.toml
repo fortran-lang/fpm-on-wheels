@@ -23,5 +23,5 @@ build-backend = "setuptools.build_meta"
 
 [[tool.cibuildwheel.overrides]]
 select = "*-macosx_arm64"
-before-build = "bash {project}/scripts/cibw_before_build_macos.sh {project}"
-environment = { FC = "/usr/local/bin/gfortran" }
+before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
+environment = { CC = "clang", CXX = "clang++", RUNNER_OS = "macOS", FC="/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran", LDFLAGS = " -L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0", FC_ARM64_LDFLAGS = "$FC_ARM64_LDFLAGS" }

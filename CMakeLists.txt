@@ -91,14 +91,7 @@ set_target_properties(${BIN_NAME}
   Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/inc
 )
 
-if(WIN32)
-  if(SKBUILD)
-    # pip on Windows installs binaries to Scripts not bin
-    message(STATUS "Will install binaries to Scripts")
-    set(CMAKE_INSTALL_BINDIR Scripts)
-  endif()
-endif()
-
+# Install fpm inside the src layout for __main__.py to pick it up
 install(TARGETS ${BIN_NAME}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/src/fpm
 )

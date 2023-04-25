@@ -20,4 +20,3 @@ _skbuild/
 
 .coverage
 coverage.xml
-fpm/

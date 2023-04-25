@@ -14,7 +14,7 @@ license = { text = "MIT License" }
 authors = [{ name = "fpm maintainers" }]
 requires-python = ">=3.7"
 description = "Fortran package manager"
-readme = "README.md"
+readme = "docs/README.md"
 keywords = ["fpm", "fortran", "package manager"]
 classifiers = [
     "Development Status :: 3 - Alpha",

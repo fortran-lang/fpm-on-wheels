@@ -12,8 +12,8 @@ endif()
 
 # Set Git tags for dependencies
 set(M_CLI2_TAG "ea6bbffc1c2fb0885e994d37ccf0029c99b19f24" CACHE STRING "Set git tag for M_CLI2")
-set(TOML_F_TAG "e49f5523e4ee67db6628618864504448fb8c8939" CACHE STRING "Set git tag for toml_f")
-set(FPM_TAG "v0.7.0" CACHE STRING "Set git tag for fpm")
+set(JONQUIL_TAG "05d30818bb12fb877226ce284b9a3a41b971a889" CACHE STRING "Set git tag for jonquil")
+set(FPM_TAG "v0.8.0" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 
@@ -25,7 +25,6 @@ FetchContent_Declare(
   GIT_REPOSITORY "https://github.com/fortran-lang/fpm.git"
   SOURCE_DIR "${CMAKE_BINARY_DIR}/fpm"
 )
-
 FetchContent_MakeAvailable(fpm_src)
 
 # Download the dependencies from a git project
@@ -33,7 +32,7 @@ FetchContent_Declare(
   m_cli2_src
   GIT_REPOSITORY "https://github.com/urbanjost/M_CLI2.git"
   GIT_TAG ${M_CLI2_TAG}
-  SOURCE_DIR "${fpm_src_SOURCE_DIR}/dependencies/M_CLI2"
+  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/M_CLI2"
 )
 
 # Do not import any of the predefined targets from the dependencies
@@ -45,21 +44,27 @@ FetchContent_Declare(
 set_directory_properties(PROPERTIES EXCLUDE_FROM_ALL YES)
 
 FetchContent_Declare(
-  toml_f_src
-  GIT_REPOSITORY "https://github.com/toml-f/toml-f.git"
-  GIT_TAG ${TOML_F_TAG}
-  SOURCE_DIR "${fpm_src_SOURCE_DIR}/dependencies/toml-f"
+  jonquil_src
+  GIT_REPOSITORY "https://github.com/toml-f/jonquil.git"
+  GIT_TAG ${JONQUIL_TAG}
+  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/jonquil"
 )
+FetchContent_MakeAvailable(fpm_src m_cli2_src jonquil_src)
 
-FetchContent_MakeAvailable(m_cli2_src toml_f_src)
+# Get toml-f's source dir from within jonquil's source dir
+# FetchContent_Declare is first come first serve in terms of target names
+# so we cannot download toml-f directly since it is a dependency of jonquil
+# Make custom find modules available for project
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${jonquil_src_SOURCE_DIR}/config/cmake")
+find_package("toml-f" REQUIRED)
 
 # Case 2: Set after (applies only to dependency's scope and below)
-if(IS_DIRECTORY "${toml_f_src_SOURCE_DIR}")
-  set_property(DIRECTORY ${toml_f_src_SOURCE_DIR} PROPERTY EXCLUDE_FROM_ALL YES)
+if(IS_DIRECTORY "${jonquil_src_SOURCE_DIR}")
+  set_property(DIRECTORY ${jonquil_src_SOURCE_DIR} PROPERTY EXCLUDE_FROM_ALL YES)
 endif()
 
 message(STATUS "M_CLI2 source dir: ${m_cli2_src_SOURCE_DIR}")
-message(STATUS "toml-f source dir: ${toml_f_src_SOURCE_DIR}")
+message(STATUS "jonquil source dir: ${jonquil_src_SOURCE_DIR}")
 message(STATUS "fpm source dir: ${fpm_src_SOURCE_DIR}")
 
 # Collect source files
@@ -68,7 +73,8 @@ file(GLOB_RECURSE
   SRC_FILES
   ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.F90
   ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.f90
-  ${toml_f_src_SOURCE_DIR}/src/*.f90
+  ${jonquil_src_SOURCE_DIR}/src/*.f90
+  ${TOML_FORTRAN_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90
   ${fpm_src_SOURCE_DIR}/src/*.h

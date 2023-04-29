@@ -24,7 +24,6 @@ classifiers = [
     "Programming Language :: Fortran",
     "Topic :: Software Development :: Build Tools",
     "Topic :: Software Development :: Compilers",
-    "Topic :: Software Development :: Libraries :: Fortran",
     "Topic :: Software Development :: Pre-processors",
     "Topic :: Utilities",
 ]

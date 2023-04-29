@@ -11,9 +11,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set Git tags for dependencies
-set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
-set(TOML_F_TAG "aee54c5a480d623af99828c76df0447a15ce90dc" CACHE STRING "Set git tag for toml_f")
-set(FPM_TAG "v0.7.0" CACHE STRING "Set git tag for fpm")
+set(M_CLI2_TAG "ea6bbffc1c2fb0885e994d37ccf0029c99b19f24" CACHE STRING "Set git tag for M_CLI2")
+set(TOML_F_TAG "2f5eaba864ff630ba0c3791126a3f811b6e437f3" CACHE STRING "Set git tag for toml_f")
+set(FPM_TAG "v0.3.0" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 
@@ -67,6 +67,7 @@ message(STATUS "fpm source dir: ${fpm_src_SOURCE_DIR}")
 file(GLOB_RECURSE
   SRC_FILES
   ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.F90
+  ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.f90
   ${toml_f_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90

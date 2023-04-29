@@ -32,15 +32,19 @@ non-Fortran related package manager.
 ### Setting up fpm
 
 #### Binary download
-`x86-64` binaries are available [to download](https://github.com/fortran-lang/fpm/releases) for Windows, MacOS and Linux.
+
+Binaries for the latest stable release are available [to download](https://github.com/fortran-lang/fpm/releases/latest) for Windows, MacOS, and Linux.
 
 __Note:__ On Linux and MacOS, you will need to enable executable permission before you can use the binary.
 
-_e.g._ `$ chmod u+x fpm-0.4.0-linux-x86_64`
+_e.g._ `$ chmod u+x fpm-0.5.0-linux-x86_64`
 
-#### Conda
+The binaries at the [current tag](https://github.com/fortran-lang/fpm/releases/tag/current) are updated automatically to always provide the current git version from the default branch.
 
-Fpm is available on conda-forge, to add conda-forge to your channels use:
+
+#### [Conda]
+
+Fpm is available on [conda-forge], to add conda-forge to your channels use:
 
 ```
 conda config --add channels conda-forge
@@ -55,6 +59,47 @@ conda activate fpm
 
 The conda package manager can be installed from [miniforge](https://github.com/conda-forge/miniforge/releases)
 or from [miniconda](https://docs.conda.io/en/latest/miniconda.html).
+
+[Conda]: https://conda.io
+[conda-forge]: https://conda-forge.org/
+
+
+#### [MSYS2]
+
+Fpm is available as MinGW package in the MSYS2 package manager.
+To install fpm with pacman use
+
+```
+pacman -S mingw-w64-x86_64-fpm
+```
+
+Afterwards fpm will be available for usage.
+Currently `i686`, `x86_64` and `ucrt-x86_64` are supported MinGW architectures for fpm.
+For more details check the package information [here](https://packages.msys2.org/base/mingw-w64-fpm).
+
+[MSYS2]: https://www.msys2.org/
+
+
+#### [Spack]
+
+Fpm is available with spack in its develop version.
+To install fpm from spack use
+
+```
+spack install fpm
+```
+
+You can add `+openmp` to enable parallelization of the target compilation in fpm.
+To use fpm in your environment load it with
+
+```
+spack load fpm
+```
+
+For more details check the package information [here](https://spack.readthedocs.io/en/latest/package_list.html#fpm).
+
+[Spack]: https://spack.io
+
 
 #### Github Actions
 
@@ -105,7 +150,7 @@ To build manually using the single source distribution, run the following code (
 
 ```
 mkdir _tmp
-curl -LJ https://github.com/fortran-lang/fpm/releases/download/v0.3.0/fpm-0.3.0.F90 > _tmp/fpm.F90
+curl -LJ https://github.com/fortran-lang/fpm/releases/download/current/fpm.F90 > _tmp/fpm.F90
 gfortran -J _tmp _tmp/fpm.F90 -o _tmp/fpm
 _tmp/fpm install --flag "-g -fbacktrace -O3"
 rm -r _tmp
@@ -117,5 +162,15 @@ To automatically bootstrap using this appoach run the install script
 ./install.sh
 ```
 
-You can set your Fortran compiler and the compiler flags with the ``FC`` and ``FFLAGS``
-environment variables.
+The table below lists the environment variables that control `fpm`'s choice of compilers, 
+compiler flags, archiver locations, and link flags, each of which can be overridden by 
+passing `fpm` flags also shown in the table.
+
+| Environment Variable | Defines               | Overridden by  |
+| :------------------- | :-------------------- | :------------- |
+| `FPM_FC`             | Fortran compiler path | `--compiler`   |
+| `FPM_CC`             | C compiler path       | `--c-compiler` |
+| `FPM_FFLAGS`         | Fortran compiler flags| `--flag`       |
+| `FPM_CFLAGS`         | C compiler flags      | `--c-flag`     |
+| `FPM_AR`             | Archiver path         | `--archiver`   |
+| `FPM_LDFLAGS`        | Link flags            | `--link-flag`  |

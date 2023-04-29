@@ -11,9 +11,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set Git tags for dependencies
-set(M_CLI2_TAG "ea6bbffc1c2fb0885e994d37ccf0029c99b19f24" CACHE STRING "Set git tag for M_CLI2")
+set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
 set(JONQUIL_TAG "05d30818bb12fb877226ce284b9a3a41b971a889" CACHE STRING "Set git tag for jonquil")
-set(FPM_TAG "v0.8.0" CACHE STRING "Set git tag for fpm")
+set(FPM_TAG "v0.8.1" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 

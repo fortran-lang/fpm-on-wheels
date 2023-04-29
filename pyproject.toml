@@ -28,6 +28,7 @@ classifiers = [
     "Topic :: Software Development :: Pre-processors",
     "Topic :: Utilities",
 ]
+dynamic = ["entry-points"]
 
 [project.urls]
 homepage = "https://fpm.fortran-lang.org"

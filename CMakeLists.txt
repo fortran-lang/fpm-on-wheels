@@ -13,7 +13,7 @@ endif()
 # Set Git tags for dependencies
 set(M_CLI2_TAG "ea6bbffc1c2fb0885e994d37ccf0029c99b19f24" CACHE STRING "Set git tag for M_CLI2")
 set(TOML_F_TAG "2f5eaba864ff630ba0c3791126a3f811b6e437f3" CACHE STRING "Set git tag for toml_f")
-set(FPM_TAG "v0.5.0" CACHE STRING "Set git tag for fpm")
+set(FPM_TAG "v0.6.0" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 

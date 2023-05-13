@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fpm"
-version = "0.8.1"
+version = "0.8.1" # NOTE: for new releases, update the version number
 license = { text = "MIT License" }
 authors = [{ name = "fpm maintainers" }]
 requires-python = ">=3.7"
@@ -37,6 +37,9 @@ bug-tracker = "https://github.com/fortran-lang/fpm/issues"
 [tool.cibuildwheel]
 build = "cp310-*"
 build-verbosity = "3"
+
+# NOTE: for new releases update the version number passed to the tests
+test-command = "python {project}/test/run_fpm_tests.py v0.8.1"
 
 [tool.cibuildwheel.macos]
 archs = ["x86_64", "arm64"]

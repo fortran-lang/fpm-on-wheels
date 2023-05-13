@@ -17,7 +17,7 @@ set(FPM_TAG "v0.8.1" CACHE STRING "Set git tag for fpm")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 
-find_package(OpenMP REQUIRED Fortran)
+find_package(OpenMP COMPONENTS Fortran)
 
 FetchContent_Declare(
   fpm_src
@@ -85,7 +85,12 @@ file(GLOB_RECURSE
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
-target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
+
+if(OpenMP_Fortran_FOUND)
+  message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")
+  target_compile_options(${BIN_NAME} PUBLIC ${OpenMP_Fortran_FLAGS})
+  target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
+endif()
 
 # Set additional properties for executable target
 set_target_properties(${BIN_NAME}

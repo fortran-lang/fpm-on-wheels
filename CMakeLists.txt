@@ -88,7 +88,6 @@ add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
 
 if(OpenMP_Fortran_FOUND)
   message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")
-  target_compile_options(${BIN_NAME} PUBLIC ${OpenMP_Fortran_FLAGS})
   target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)
 endif()
 

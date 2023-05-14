@@ -13,7 +13,8 @@ endif()
 # Set Git tags for dependencies
 set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
 set(JONQUIL_TAG "4c27c8c1e411fa8790dffcf8c3fa7a27b6322273" CACHE STRING "Set git tag for jonquil")
-set(FPM_TAG "v0.8.2" CACHE STRING "Set git tag for fpm")
+set(FPM_VERSION "0.8.2" CACHE STRING "Set fpm version e.g. 8.0.0")
+set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
 
@@ -85,6 +86,9 @@ file(GLOB_RECURSE
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
+
+# version preproc tag was added in fpm 0.8.2
+target_compile_definitions(${BIN_NAME} PRIVATE FPM_RELEASE_VERSION=${FPM_VERSION})
 
 if(OpenMP_Fortran_FOUND)
   message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")

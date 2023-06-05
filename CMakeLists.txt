@@ -13,7 +13,8 @@ endif()
 # Set Git tags for dependencies
 set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
 set(JONQUIL_TAG "4c27c8c1e411fa8790dffcf8c3fa7a27b6322273" CACHE STRING "Set git tag for jonquil")
-set(FPM_VERSION "0.8.2" CACHE STRING "Set fpm version e.g. 8.0.0")
+set(REGEX_TAG "1.1.2" CACHE STRING "Set git tag for Fortran-regex")
+set(FPM_VERSION "0.9.0" CACHE STRING "Set fpm version e.g. 8.0.0")
 set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
@@ -50,7 +51,15 @@ FetchContent_Declare(
   GIT_TAG ${JONQUIL_TAG}
   SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/jonquil"
 )
-FetchContent_MakeAvailable(fpm_src m_cli2_src jonquil_src)
+
+FetchContent_Declare(
+  regex_src
+  GIT_REPOSITORY "https://github.com/perazz/fortran-regex"
+  GIT_TAG ${REGEX_TAG}
+  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/fortran-regex"
+)
+
+FetchContent_MakeAvailable(fpm_src m_cli2_src jonquil_src regex_src)
 
 # Get toml-f's source dir from within jonquil's source dir
 # FetchContent_Declare is first come first serve in terms of target names
@@ -76,6 +85,7 @@ file(GLOB_RECURSE
   ${m_cli2_src_SOURCE_DIR}/src/M_CLI2*.f90
   ${jonquil_src_SOURCE_DIR}/src/*.f90
   ${TOML_FORTRAN_SOURCE_DIR}/src/*.f90
+  ${regex_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90
   ${fpm_src_SOURCE_DIR}/src/*.h

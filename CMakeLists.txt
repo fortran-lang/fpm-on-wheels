@@ -12,7 +12,7 @@ endif()
 
 # Set Git tags for dependencies
 set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
-set(JONQUIL_TAG "4c27c8c1e411fa8790dffcf8c3fa7a27b6322273" CACHE STRING "Set git tag for jonquil")
+set(JONQUIL_TAG "4fbd4cf34d577c0fd25e32667ee9e41bf231ece8" CACHE STRING "Set git tag for jonquil")
 set(REGEX_TAG "1.1.2" CACHE STRING "Set git tag for Fortran-regex")
 set(FPM_VERSION "0.9.0" CACHE STRING "Set fpm version e.g. 8.0.0")
 set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")

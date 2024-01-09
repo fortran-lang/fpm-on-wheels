@@ -12,9 +12,10 @@ endif()
 
 # Set Git tags for dependencies
 set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
-set(JONQUIL_TAG "4c27c8c1e411fa8790dffcf8c3fa7a27b6322273" CACHE STRING "Set git tag for jonquil")
+set(JONQUIL_TAG "4fbd4cf34d577c0fd25e32667ee9e41bf231ece8" CACHE STRING "Set git tag for jonquil")
 set(REGEX_TAG "1.1.2" CACHE STRING "Set git tag for Fortran-regex")
-set(FPM_VERSION "0.9.0" CACHE STRING "Set fpm version e.g. 8.0.0")
+set(SHLEX_TAG "1.0.1" CACHE STRING "Set git tag for fortran-shlex")
+set(FPM_VERSION "0.10.0" CACHE STRING "Set fpm version e.g. 8.0.0")
 set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
@@ -59,7 +60,14 @@ FetchContent_Declare(
   SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/fortran-regex"
 )
 
-FetchContent_MakeAvailable(fpm_src m_cli2_src jonquil_src regex_src)
+FetchContent_Declare(
+  shlex_src
+  GIT_REPOSITORY "https://github.com/perazz/fortran-shlex.git"
+  GIT_TAG ${SHLEX_TAG}
+  SOURCE_DIR "${CMAKE_BINARY_DIR}/dependencies/fortran-shlex"
+)
+
+FetchContent_MakeAvailable(fpm_src m_cli2_src jonquil_src regex_src shlex_src)
 
 # Get toml-f's source dir from within jonquil's source dir
 # FetchContent_Declare is first come first serve in terms of target names
@@ -75,6 +83,8 @@ endif()
 
 message(STATUS "M_CLI2 source dir: ${m_cli2_src_SOURCE_DIR}")
 message(STATUS "jonquil source dir: ${jonquil_src_SOURCE_DIR}")
+message(STATUS "regex source dir: ${regex_src_SOURCE_DIR}")
+message(STATUS "shlex source dir: ${shlex_src_SOURCE_DIR}")
 message(STATUS "fpm source dir: ${fpm_src_SOURCE_DIR}")
 
 # Collect source files
@@ -86,6 +96,7 @@ file(GLOB_RECURSE
   ${jonquil_src_SOURCE_DIR}/src/*.f90
   ${TOML_FORTRAN_SOURCE_DIR}/src/*.f90
   ${regex_src_SOURCE_DIR}/src/*.f90
+  ${shlex_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.F90
   ${fpm_src_SOURCE_DIR}/src/*.h

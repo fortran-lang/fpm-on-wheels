@@ -82,6 +82,8 @@ endif()
 
 message(STATUS "M_CLI2 source dir: ${m_cli2_src_SOURCE_DIR}")
 message(STATUS "jonquil source dir: ${jonquil_src_SOURCE_DIR}")
+message(STATUS "regex source dir: ${regex_src_SOURCE_DIR}")
+message(STATUS "shlex source dir: ${shlex_src_SOURCE_DIR}")
 message(STATUS "fpm source dir: ${fpm_src_SOURCE_DIR}")
 
 # Collect source files

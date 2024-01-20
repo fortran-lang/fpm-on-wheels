@@ -23,15 +23,14 @@ The wheels are generated for the following platforms:
    [`fpm`](https://github.com/fortran-lang/fpm.git),
    [`toml-f`](https://github.com/toml-f/toml-f.git) and
    [`M_CLI2`](https://github.com/urbanjost/M_CLI2.git)
-2. Update the version number in `pyproject.toml`
-3. Update the `docs/README.md` with the README file of the fpm project
-4. Update the paths and flags in `pyproject.toml`'s
+2. Update the `docs/README.md` with the README file of the fpm project
+3. Update the paths and flags in `pyproject.toml`'s
    `[tool.cibuildwheel.overrides.environment]` table for `FC` and `LDFLAGS`
    to match those printed by `tools/wheels/cibw_before_build_macos.sh` when
    run on a GitHub runner.
-5. Commit the changes via a pull-request to `main` and ask one of the admins
+4. Commit the changes via a pull-request to `main` and ask one of the admins
    to merge it.
-6. Admins: Issue a new release on GitHub with the same version number as
+5. Admins: Issue a new release on GitHub with the same version number as
    in `pyproject.toml` using the prefix `v` e.g. `v0.1.0`.
 
 ## Development Instructions

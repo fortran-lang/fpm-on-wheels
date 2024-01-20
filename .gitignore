@@ -20,3 +20,4 @@ _skbuild/
 
 .coverage
 coverage.xml
+src/fpm/_version.py

@@ -4,12 +4,12 @@ requires = [
     "scikit-build>=0.16.7",
     "cmake>=3.20.0",
     "ninja",
+    "setuptools_scm>=8",
 ]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "fpm"
-version = "0.10.0"
 license = { text = "MIT License" }
 authors = [{ name = "fpm maintainers" }]
 requires-python = ">=3.7"
@@ -27,12 +27,15 @@ classifiers = [
     "Topic :: Software Development :: Pre-processors",
     "Topic :: Utilities",
 ]
-dynamic = ["entry-points", "scripts"]
+dynamic = ["version", "entry-points", "scripts"]
 
 [project.urls]
 homepage = "https://fpm.fortran-lang.org"
 source-code = "https://github.com/fortran-lang/fpm"
 bug-tracker = "https://github.com/fortran-lang/fpm/issues"
+
+[tool.setuptools_scm]
+write_to = "src/fpm/_version.py"
 
 [tool.cibuildwheel]
 build = "cp310-*"

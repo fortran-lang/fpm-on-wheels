@@ -30,6 +30,10 @@ jobs:
           install: >-
             mingw-w64-x86_64-gcc-fortran
 
+      - if: runner.os == 'macOS'
+        name: Install gfortran
+        run: brew install gfortran
+
       - name: Build wheels
         run: |
           pipx run cibuildwheel

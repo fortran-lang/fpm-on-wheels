@@ -111,12 +111,6 @@ add_executable(${BIN_NAME} ${SRC_FILES} ${fpm_src_SOURCE_DIR}/app/main.f90)
 # version preproc tag was added in fpm 0.8.2
 target_compile_definitions(${BIN_NAME} PRIVATE FPM_RELEASE_VERSION=${FPM_VERSION})
 
-# HACK: circumvent compiler's default preprocessor heuristic and enable it
-# globally. This is to circumvent sr/fpm/fpm_release.f90 erroneous lowecase
-# file extension.
-# Remove in the next fpm release
-target_compile_options(${BIN_NAME} PRIVATE "-cpp")
-
 if(OpenMP_Fortran_FOUND)
   message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")
   target_link_libraries(${BIN_NAME} PUBLIC OpenMP::OpenMP_Fortran)

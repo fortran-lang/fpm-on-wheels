@@ -98,7 +98,7 @@ file(GLOB_RECURSE
   ${regex_src_SOURCE_DIR}/src/*.f90
   ${shlex_src_SOURCE_DIR}/src/*.f90
   ${fpm_src_SOURCE_DIR}/src/*.f90
-  ${fpm_src_SOURCE_DIR}/src/*.F90
+  ${fpm_src_SOURCE_DIR}/src/*.F90 
   ${fpm_src_SOURCE_DIR}/src/*.h
   ${fpm_src_SOURCE_DIR}/src/*.c
 )

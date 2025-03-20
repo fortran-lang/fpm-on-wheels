@@ -51,8 +51,9 @@ function get_distutils_platform {
         echo "manylinux1_$plat"
         return
     fi
-    # The gfortran downloads build for macos 10.9
-    local target="10_9"
+    # macOS 32-bit arch is i386
+    [ "$plat" == "i686" ] && plat="i386"
+    local target=$(echo $MACOSX_DEPLOYMENT_TARGET | tr .- _)
     echo "macosx_${target}_${plat}"
 }
 
@@ -76,8 +77,9 @@ function get_distutils_platform_ex {
         echo "manylinux${mb_ml_ver}_${plat}"
         return
     fi
-    # The gfortran downloads build for macos 10.9
-    local target="10_9"
+    # macOS 32-bit arch is i386
+    [ "$plat" == "i686" ] && plat="i386"
+    local target=$(echo $MACOSX_DEPLOYMENT_TARGET | tr .- _)
     echo "macosx_${target}_${plat}"
 }
 
@@ -148,10 +150,10 @@ if [ "$(uname)" == "Darwin" ]; then
 	if [[ "${type}" == "native" ]]; then
 	    # Link these into /usr/local so that there's no need to add rpath or -L
 	    for f in libgfortran.dylib libgfortran.5.dylib libgcc_s.1.dylib libgcc_s.1.1.dylib libquadmath.dylib libquadmath.0.dylib; do
-                sudo ln -sf /opt/gfortran-darwin-${arch}-${type}/lib/$f /usr/local/lib/$f
+                ln -sf /opt/gfortran-darwin-${arch}-${type}/lib/$f /usr/local/lib/$f
             done
 	    # Add it to PATH
-	    sudo ln -sf /opt/gfortran-darwin-${arch}-${type}/bin/gfortran /usr/local/bin/gfortran
+	    ln -sf /opt/gfortran-darwin-${arch}-${type}/bin/gfortran /usr/local/bin/gfortran
 	fi
     }
 

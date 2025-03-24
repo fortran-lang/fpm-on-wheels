@@ -44,6 +44,20 @@ build-verbosity = "3"
 archs = ["x86_64", "arm64"]
 environment = { CC = "clang", CXX = "clang++", FC = "gfortran-12", MACOSX_DEPLOYMENT_TARGET = 13.0 }
 
+[[tool.cibuildwheel.overrides]]
+select = "*-macosx_arm64"
+before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
+
+# Override the default environment variables with the cross-compiled ones.
+# Since the before-build script runs in a subprocess, the printed values won't persist in the build environment.
+# They must be explicitly set here. Please check they match those in the CI log. 
+[tool.cibuildwheel.overrides.environment]
+CC = "clang"
+CXX = "clang++"
+MACOSX_DEPLOYMENT_TARGET = 13.0
+FC = "/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran"
+LDFLAGS = "-L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0"
+
 [tool.cibuildwheel.windows]
 archs = ["auto64"]
 environment = { CC = "gcc", CXX = "g++", FC = "gfortran" }

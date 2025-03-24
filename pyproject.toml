@@ -19,7 +19,6 @@ keywords = ["fpm", "fortran", "package manager"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: MacOS",
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
@@ -49,7 +48,9 @@ environment = { CC = "clang", CXX = "clang++", FC = "gfortran-12", MACOSX_DEPLOY
 select = "*-macosx_arm64"
 before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
 
-# Override the default environment variables with the cross-compiled ones
+# Override the default environment variables with the cross-compiled ones.
+# Since the before-build script runs in a subprocess, the printed values won't persist in the build environment.
+# They must be explicitly set here. Please check they match those in the CI log. 
 [tool.cibuildwheel.overrides.environment]
 CC = "clang"
 CXX = "clang++"

@@ -11,11 +11,11 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set Git tags for dependencies
-set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git tag for M_CLI2")
-set(JONQUIL_TAG "4fbd4cf34d577c0fd25e32667ee9e41bf231ece8" CACHE STRING "Set git tag for jonquil")
+set(M_CLI2_TAG "d75d4a0af94b35afd16fdc7bc64781a3a7defba9" CACHE STRING "Set git tag for M_CLI2")
+set(JONQUIL_TAG "4d43ffea512977602f654ab10067fcddb3e3c107" CACHE STRING "Set git tag for jonquil")
 set(REGEX_TAG "1.1.2" CACHE STRING "Set git tag for Fortran-regex")
-set(SHLEX_TAG "1.0.1" CACHE STRING "Set git tag for fortran-shlex")
-set(FPM_VERSION "0.10.1" CACHE STRING "Set fpm version e.g. 8.0.0")
+set(SHLEX_TAG "2.0.1" CACHE STRING "Set git tag for fortran-shlex")
+set(FPM_VERSION "0.12.0" CACHE STRING "Set fpm version e.g. 8.0.0")
 set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})

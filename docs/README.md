@@ -40,14 +40,6 @@ webpage for a list of **[All Supported Installations](https://fpm.fortran-lang.o
 
 The easiest installation routes are shown below.
 
-### [Python PyPi](https://pypi.org/project/fpm/)
-
-Fpm is available on [PyPI](https://pypi.org/project/fpm/), and can be installed with:
-
-```sh
-pip install fpm
-```
-
 ### [Binary](https://github.com/fortran-lang/fpm/releases)
 
 Binaries for the latest stable release are available [to download](https://github.com/fortran-lang/fpm/releases/latest) for Windows, MacOS, and Linux.
@@ -128,7 +120,7 @@ arguments can also be passed to the executable(s) or test(s) with the option
 See additional instructions in the [Packaging guide](PACKAGING.md) or
 the [manifest reference](https://fpm.fortran-lang.org/spec/manifest.html).
 
-<!-- 
+<!--
 ### Bootstrapping instructions
 
 This guide explains the process of building *fpm* on a platform for the first time.
@@ -153,8 +145,8 @@ To automatically bootstrap using this appoach run the install script
 
 ## Environmental variables
 
-The table below lists the environment variables that control `fpm`'s choice of compilers, 
-compiler flags, archiver locations, and link flags, each of which can be overridden by 
+The table below lists the environment variables that control `fpm`'s choice of compilers,
+compiler flags, archiver locations, and link flags, each of which can be overridden by
 passing `fpm` flags also shown in the table.
 
 | Environment Variable | Defines               | Overridden by    |

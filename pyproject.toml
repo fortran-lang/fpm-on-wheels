@@ -42,6 +42,8 @@ cmake.args = ["-G", "MSYS Makefiles"]
 [tool.cibuildwheel]
 build = "cp311-*"
 build-verbosity = 3
+test-command = "python {project}/tools/run_tests.py --tag v0.12.0"
+test-skip = "*-*linux_{aarch64,ppc64le,s390x,armv7l}"  # Skip emulated architectures
 
 [tool.cibuildwheel.macos]
 archs = ["auto"]

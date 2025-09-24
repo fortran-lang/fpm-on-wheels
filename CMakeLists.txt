@@ -15,7 +15,7 @@ set(M_CLI2_TAG "7264878cdb1baff7323cc48596d829ccfe7751b8" CACHE STRING "Set git 
 set(JONQUIL_TAG "4fbd4cf34d577c0fd25e32667ee9e41bf231ece8" CACHE STRING "Set git tag for jonquil")
 set(REGEX_TAG "1.1.2" CACHE STRING "Set git tag for Fortran-regex")
 set(SHLEX_TAG "1.0.1" CACHE STRING "Set git tag for fortran-shlex")
-set(FPM_VERSION "0.10.1" CACHE STRING "Set fpm version e.g. 8.0.0")
+set(FPM_VERSION "0.11.0" CACHE STRING "Set fpm version e.g. 8.0.0")
 set(FPM_TAG "v${FPM_VERSION}" CACHE STRING "Set git tag for fpm, default is v${FPM_VERSION}")
 
 set(BIN_NAME ${CMAKE_PROJECT_NAME})
@@ -115,7 +115,7 @@ target_compile_definitions(${BIN_NAME} PRIVATE FPM_RELEASE_VERSION=${FPM_VERSION
 # globally. This is to circumvent sr/fpm/fpm_release.f90 erroneous lowecase
 # file extension.
 # Remove in the next fpm release
-target_compile_options(${BIN_NAME} PRIVATE "-cpp")
+target_compile_options(${BIN_NAME} PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-cpp>)
 
 if(OpenMP_Fortran_FOUND)
   message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")

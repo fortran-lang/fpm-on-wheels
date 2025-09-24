@@ -37,7 +37,7 @@ bug-tracker = "https://github.com/fortran-lang/fpm/issues"
 write_to = "src/fpm/_version.py"
 
 [tool.cibuildwheel]
-build = "cp310-*"
+build = "cp311-*"
 build-verbosity = "3"
 
 [tool.cibuildwheel.macos]

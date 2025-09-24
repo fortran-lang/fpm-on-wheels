@@ -38,7 +38,7 @@ write_to = "src/fpm/_version.py"
 
 [tool.cibuildwheel]
 build = "cp311-*"
-build-verbosity = "3"
+build-verbosity = 3
 
 [tool.cibuildwheel.macos]
 archs = ["auto"]

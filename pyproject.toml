@@ -1,8 +1,8 @@
 [build-system]
 requires = [
-    "setuptools>=67.0.0",
+    "setuptools>=80",
     "scikit-build>=0.16.7",
-    "cmake>=3.20.0",
+    "cmake>=4.1.0",
     "ninja",
     "setuptools_scm>=8",
 ]

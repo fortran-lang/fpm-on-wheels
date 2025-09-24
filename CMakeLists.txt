@@ -115,7 +115,7 @@ target_compile_definitions(${BIN_NAME} PRIVATE FPM_RELEASE_VERSION=${FPM_VERSION
 # globally. This is to circumvent sr/fpm/fpm_release.f90 erroneous lowecase
 # file extension.
 # Remove in the next fpm release
-target_compile_options(${BIN_NAME} PRIVATE "-cpp")
+target_compile_options(${BIN_NAME} PRIVATE $<$<COMPILE_LANGUAGE:Fortran>:-cpp>)
 
 if(OpenMP_Fortran_FOUND)
   message(STATUS "OpenMP Fortran found: Building fpm for parallel execution")

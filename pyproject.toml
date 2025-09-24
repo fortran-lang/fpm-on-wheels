@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fpm"
-license = { text = "MIT License" }
+license = "MIT"
 authors = [{ name = "fpm maintainers" }]
 requires-python = ">=3.7"
 description = "Fortran package manager"
@@ -19,7 +19,6 @@ keywords = ["fpm", "fortran", "package manager"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Fortran",
     "Topic :: Software Development :: Build Tools",

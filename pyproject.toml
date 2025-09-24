@@ -43,7 +43,7 @@ build-verbosity = "3"
 
 [tool.cibuildwheel.macos]
 archs = ["auto"]
-environment = { CC = "clang", CXX = "clang++", FC = "gfortran-11" }
+environment = { CC = "clang", CXX = "clang++", FC = "gfortran-12" }
 
 # [[tool.cibuildwheel.overrides]]
 # select = "*-macosx_arm64"

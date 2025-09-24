@@ -42,19 +42,19 @@ build = "cp310-*"
 build-verbosity = "3"
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64", "arm64"]
+archs = ["auto"]
 environment = { CC = "clang", CXX = "clang++", FC = "gfortran-11" }
 
-[[tool.cibuildwheel.overrides]]
-select = "*-macosx_arm64"
-before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
+# [[tool.cibuildwheel.overrides]]
+# select = "*-macosx_arm64"
+# before-build = "bash {project}/tools/wheels/cibw_before_build_macos.sh {project}"
 
-# Override the default environment variables with the cross-compiled ones
-[tool.cibuildwheel.overrides.environment]
-CC = "clang"
-CXX = "clang++"
-FC = "/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran"
-LDFLAGS = "-L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0"
+# # Override the default environment variables with the cross-compiled ones
+# [tool.cibuildwheel.overrides.environment]
+# CC = "clang"
+# CXX = "clang++"
+# FC = "/opt/gfortran-darwin-arm64-cross/bin/arm64-apple-darwin20.0.0-gfortran"
+# LDFLAGS = "-L/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0 -Wl,-rpath,/opt/gfortran-darwin-arm64-cross/lib/gcc/arm64-apple-darwin20.0.0/11.3.0"
 
 [tool.cibuildwheel.windows]
 archs = ["auto64"]

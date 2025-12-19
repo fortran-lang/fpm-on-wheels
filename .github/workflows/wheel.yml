@@ -13,7 +13,7 @@ jobs:
           - { os: windows-2022, shell: "msys2 {0}" }
           - { os: ubuntu-22.04, shell: bash }
           - { os: macos-14, shell: bash }
-          - { os: macos-13, shell: bash } # Intel runner
+          - { os: macos-15-intel, shell: bash } # Intel runner
     defaults:
       run:
         shell: ${{ matrix.sys.shell }}

@@ -1,16 +1,10 @@
 [build-system]
-requires = [
-    "setuptools>=80",
-    "scikit-build>=0.16.7",
-    "cmake>=4.1.0",
-    "ninja",
-    "setuptools_scm>=8",
-]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core>=0.11", "setuptools_scm>=8.1"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "fpm"
-license = "MIT"
+license = { text = "MIT" }
 authors = [{ name = "fpm maintainers" }]
 requires-python = ">=3.7"
 description = "Fortran package manager"
@@ -26,15 +20,24 @@ classifiers = [
     "Topic :: Software Development :: Pre-processors",
     "Topic :: Utilities",
 ]
-dynamic = ["version", "entry-points", "scripts"]
+dynamic = ["version"]
 
 [project.urls]
 homepage = "https://fpm.fortran-lang.org"
 source-code = "https://github.com/fortran-lang/fpm"
 bug-tracker = "https://github.com/fortran-lang/fpm/issues"
 
-[tool.setuptools_scm]
-write_to = "src/fpm/_version.py"
+[project.scripts]
+fpm = "fpm:main"
+
+[tool.scikit-build]
+wheel.packages = ["src/fpm"]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+build.verbose = true
+
+[[tool.scikit-build.overrides]]
+if.platform-system = "win32"
+cmake.args = ["-G", "MSYS Makefiles"]
 
 [tool.cibuildwheel]
 build = "cp311-*"

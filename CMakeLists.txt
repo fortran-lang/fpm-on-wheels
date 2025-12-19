@@ -135,5 +135,5 @@ set_target_properties(${BIN_NAME}
 
 # Install fpm inside the src layout for __main__.py to pick it up
 install(TARGETS ${BIN_NAME}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/src/fpm
+  RUNTIME DESTINATION fpm
 )

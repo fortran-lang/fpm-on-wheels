@@ -33,6 +33,5 @@ The wheels are generated for the following platforms:
 
 ## Development Instructions
 
-Ensure that the following scripts and license notices are up to date:
-
-- `tools/wheels/gfortran_utils.sh` from <https://github.com/MacPython/gfortran-install>
+Wheels are compiled natively for each platform using `cibuildwheel` and
+GitHub Actions.
